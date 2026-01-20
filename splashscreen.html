@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>Loading...</title>
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box}
+      html,body{
+        width:100%;
+        height:100%;
+        background:#000 url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0gMjU2IDYwIEwgMTAwIDEzNSBRIDEwMCAyODUgMTAwIDMyMCBRIDExMiAzODUgMjU2IDQ2MCBRIDQwMCAzODUgNDEyIDMyMCBRIDQxMiAyODUgNDEyIDI3MCBMIDI3MCAyNzAgTSA0MTIgMjA1IEwgNDEyIDEzNSBMIDI1NiA2MCIgc3Ryb2tlPSJyZ2JhKDk2LDE2NSwyNTAsMC4yKSIgc3Ryb2tlLXdpZHRoPSIyNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWxsPSJub25lIi8+PHJlY3QgeD0iMzkwIiB5PSIxODMiIHdpZHRoPSI0NCIgaGVpZ2h0PSI0NCIgcng9IjYiIGZpbGw9InJnYmEoOTYsMTY1LDI1MCwwLjIpIi8+PC9zdmc+') no-repeat center center !important;
+        overflow:hidden;
+      }
+      #root{width:100%;height:100%;background:transparent}
+      #ghost-shield{
+        position:fixed;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%) translateZ(0);
+        z-index:1;
+      }
+    </style>
+    <link rel="modulepreload" href="/src/splash.tsx"/>
+  </head>
+  <body>
+    <div id="root"></div>
+    <svg id="ghost-shield" width="80" height="80" viewBox="0 0 512 512" fill="none">
+      <path
+        d="M 256 60 L 100 135 Q 100 285 100 320 Q 112 385 256 460 Q 400 385 412 320 Q 412 285 412 270 L 270 270 M 412 205 L 412 135 L 256 60"
+        stroke="rgba(96,165,250,0.2)"
+        stroke-width="26"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"
+      />
+      <rect x="390" y="183" width="44" height="44" rx="6" fill="rgba(96,165,250,0.2)"/>
+    </svg>
+    <script type="module" src="/src/splash.tsx"></script>
+  </body>
+</html>

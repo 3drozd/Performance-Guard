@@ -1,0 +1,70 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Performance Guard",
+  "version": "1.0.0",
+  "identifier": "com.performanceguard.app",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:5173",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "splashscreen",
+        "title": "Loading...",
+        "url": "/splashscreen.html",
+        "width": 300,
+        "height": 300,
+        "decorations": false,
+        "resizable": false,
+        "center": true,
+        "visible": false,
+        "transparent": true,
+        "backgroundColor": "#000000"
+      },
+      {
+        "label": "main",
+        "title": "Performance Guard",
+        "url": "/index.html",
+        "width": 1200,
+        "height": 800,
+        "resizable": true,
+        "fullscreen": false,
+        "center": true,
+        "visible": false,
+        "backgroundColor": "#000000"
+      },
+      {
+        "label": "auth",
+        "title": "Sign in with Google",
+        "url": "https://accounts.google.com",
+        "width": 500,
+        "height": 700,
+        "resizable": false,
+        "center": true,
+        "visible": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self' https://*.googleapis.com https://*.google.com https://*.firebaseapp.com https://*.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.google.com https://*.firebaseapp.com https://*.gstatic.com; style-src 'self' 'unsafe-inline' https://*.googleapis.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.googleapis.com https://*.google.com https://*.firebaseio.com https://*.firebaseapp.com wss://*.firebaseio.com; frame-src https://*.google.com https://*.firebaseapp.com;"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/icon.ico"
+    ],
+    "createUpdaterArtifacts": true
+  },
+  "plugins": {
+    "updater": {
+      "endpoints": [
+        "https://github.com/3drozd/Performance-Guard/releases/latest/download/latest.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDFBMzJGNTFBNTI2MjY2MTEKUldRUlptSlNHdlV5R3U2aUJFY2pNZlN4bVNTVWlYTlk4STlXZ3dNcDhLU2ZZRDVyMWloOFRmYWkK"
+    }
+  }
+}

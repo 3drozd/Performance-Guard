@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  background-color: #000000;
+  color: #fafafa;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #18181b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  animation: scrollbarFadeIn 0.5s ease-out forwards;
+}
+
+@keyframes scrollbarFadeIn {
+  from {
+    background: transparent;
+  }
+  to {
+    background: #3f3f46;
+  }
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}
+
+/* Custom utility classes */
+@layer components {
+  .glass-card {
+    @apply bg-bg-card rounded-xl border border-zinc-800/50;
+  }
+
+  .glass-card-hover {
+    @apply glass-card hover:bg-bg-card-hover transition-colors duration-150;
+  }
+
+  .stat-card {
+    @apply glass-card p-4;
+  }
+
+  .btn-primary {
+    @apply bg-accent-blue hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-150;
+  }
+
+  .btn-secondary {
+    @apply bg-bg-card hover:bg-bg-card-hover text-text-primary font-medium px-4 py-2 rounded-lg border border-zinc-800 transition-colors duration-150;
+  }
+
+  /* Instant panel transitions - no animations */
+  .panel-instant {
+    @apply transition-none;
+  }
+}
+
+/* Disable animations for panels */
+.no-animation {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Stable scrollbar - reserves space to prevent layout shift */
+.scrollbar-stable {
+  scrollbar-gutter: stable;
+}
+
+/* Chart expand/collapse animation - CSS grid technique */
+.chart-expand-container {
+  display: grid;
+  transition: grid-template-rows 300ms ease-out;
+}
+
+.chart-expand-container.collapsed {
+  grid-template-rows: 0fr;
+}
+
+.chart-expand-container.expanded {
+  grid-template-rows: 1fr;
+}
+
+.chart-expand-content {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Opacity transition for chart views - synced with grid animation */
+.chart-view-transition {
+  transition: opacity 300ms ease-out;
+}
+
+/* Activity label transition - slides left on expand */
+.activity-label-transition {
+  transition: transform 300ms ease-out, left 300ms ease-out;
+}

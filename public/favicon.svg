@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Definicje gradientów i filtrów -->
+  <defs>
+    <!-- Transformacja do wypełnienia całego pola -->
+    <clipPath id="bounds">
+      <rect x="0" y="0" width="512" height="512"/>
+    </clipPath>
+    <!-- Gradient dla cienia tarczy (diagonalny, ciemniejszy) -->
+    <linearGradient id="shadowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#64748b"/>
+      <stop offset="30%" stop-color="#475569"/>
+      <stop offset="60%" stop-color="#1e3a5f"/>
+      <stop offset="100%" stop-color="#0f1f33"/>
+    </linearGradient>
+
+    <!-- Gradient dla głównej tarczy (diagonalny, biało-niebieski) -->
+    <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="20%" stop-color="#93c5fd"/>
+      <stop offset="50%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+
+    <!-- Gradient pioruna: biały (lewy górny) → niebieski (prawy dolny) -->
+    <linearGradient id="boltGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#ffffff"/>
+      <stop offset="70%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+
+    <!-- Filtr rozmycia dla poświaty -->
+    <filter id="boltBlur" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12"/>
+    </filter>
+
+  </defs>
+
+  <!-- Grupa z transformacją - skalowanie i centrowanie, szczyty dotykają krawędzi -->
+  <g transform="translate(256, 256) scale(1.19) translate(-256, -267.5)">
+    <!-- Cień G-tarczy -->
+    <path
+      d="M 256 75
+         L 115 145
+         Q 115 285 115 320
+         Q 127 385 256 460
+         Q 385 385 397 320
+         Q 397 285 397 270
+         L 270 270
+         M 397 205
+         L 397 145
+         L 256 75"
+      stroke="url(#shadowGradient)"
+      stroke-width="38"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+
+    <!-- Kwadratowe końce cienia z zaokrąglonymi kantami - góra -->
+    <rect x="367" y="175" width="60" height="60" rx="7" fill="#1e3a5f"/>
+
+    <!-- Główny kształt G-tarczy -->
+    <path
+      d="M 256 75
+         L 115 145
+         Q 115 285 115 320
+         Q 127 385 256 460
+         Q 385 385 397 320
+         Q 397 285 397 270
+         L 270 270
+         M 397 205
+         L 397 145
+         L 256 75"
+      stroke="url(#shieldGradient)"
+      stroke-width="23"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+
+    <!-- Kwadratowe końce z zaokrąglonymi kantami - góra -->
+    <rect x="376" y="184" width="42" height="42" rx="5" fill="#60a5fa"/>
+
+    <!-- Piorun (biało-niebieski gradient z gradientową poświatą, obrócony -15°, skalowany 1.3x) -->
+    <g transform="rotate(-15, 256, 267) translate(256, 267) scale(1.5) translate(-269, -250)">
+      <!-- Poświata - rozmyta kopia z gradientem -->
+      <path
+        d="M 280 140 L 269 217 L 302 228 L 258 283 L 291 294 L 247 360 L 269 290 L 236 279 L 280 224 L 247 213 Z"
+        fill="url(#boltGradient)"
+        filter="url(#boltBlur)"
+        opacity="0.9"
+      />
+      <path
+        d="M 280 140 L 269 217 L 302 228 L 258 283 L 291 294 L 247 360 L 269 290 L 236 279 L 280 224 L 247 213 Z"
+        fill="url(#boltGradient)"
+        filter="url(#boltBlur)"
+        opacity="0.7"
+      />
+      <!-- Główny piorun -->
+      <path
+        d="M 280 140 L 269 217 L 302 228 L 258 283 L 291 294 L 247 360 L 269 290 L 236 279 L 280 224 L 247 213 Z"
+        fill="url(#boltGradient)"
+      />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rustc:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)"
+    ]
+  }
+}
