@@ -1,0 +1,11 @@
+{
+  "version": "1.0.1",
+  "notes": "Test update",
+  "pub_date": "2026-01-20T23:00:00Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRUlptSlNHdlV5R3JkdHRJNitBUjM3NkxDZ0p0TEpsdFZrSW55SlRZQ1A4bzZaWUVCRzBTUDNaYUY4TG9jRFVMV3pvYjgvNGFEdGlFN3QrRHdYaUJ0eHpSRWJWVWtuRndZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzY4OTQ2NDY0CWZpbGU6UGVyZm9ybWFuY2UgR3VhcmRfMS4wLjFfeDY0X2VuLVVTLm1zaQpXUTQzZzZJVWVZL1dvMlRXcGRRSER0VGpSRTZVclR2Z2xzNGFXLzlsMGZ3SkovWElaL2xrQkxDMDN4T0ZGWWo0YzMwelJnbDVwaFhMRmVPNmpnL1JBZz09Cg==",
+      "url": "https://github.com/3drozd/Performance-Guard/releases/download/v1.0.1/Performance.Guard_1.0.1_x64_en-US.msi"
+    }
+  }
+}
