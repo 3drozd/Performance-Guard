@@ -2,6 +2,7 @@ import { memo, useState, useRef, useEffect } from 'react';
 import { Cpu, MemoryStick, Clock, Monitor, ChevronDown, AppWindow } from 'lucide-react';
 import { StatCard } from '../common';
 import { formatCpuPercent, formatMemoryMB, formatDuration } from '../../utils/formatters';
+import { usePlatform } from '../../contexts/PlatformContext';
 import type { Session, AppSummary } from '../../types';
 
 interface SessionStatsProps {
@@ -21,6 +22,8 @@ export const SessionStats = memo(function SessionStats({
 }: SessionStatsProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const platform = usePlatform();
+  const showGpu = platform === 'windows' || platform === 'unknown';
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -44,7 +47,7 @@ export const SessionStats = memo(function SessionStats({
   const displayName = selectedApp ? selectedApp.replace(/\.exe$/i, '') : 'Select App';
 
   return (
-    <div className="grid grid-cols-[auto_1fr_1fr_1fr_1fr] gap-3">
+    <div className={`grid gap-3 ${showGpu ? 'grid-cols-[auto_1fr_1fr_1fr_1fr]' : 'grid-cols-[auto_1fr_1fr_1fr]'}`}>
       {/* App Selector - dropdown */}
       <div className={`stat-card flex items-center px-2.5 py-1.5 relative mr-6 bg-gradient-to-r from-accent-blue/10 to-transparent border-accent-blue/30 min-w-[160px] ${isDropdownOpen ? 'z-50' : ''}`} ref={dropdownRef}>
         <button
@@ -147,16 +150,18 @@ export const SessionStats = memo(function SessionStats({
         animationKey={animationKey}
       />
 
-      {/* Avg GPU */}
-      <StatCard
-        icon={Monitor}
-        label="Avg GPU"
-        value={session ? formatGpuPercent(session.avg_gpu_percent) : '--%'}
-        subValue={session ? `Peak: ${formatGpuPercent(session.peak_gpu_percent)}` : ''}
-        iconColor="text-accent-purple"
-        compact
-        animationKey={animationKey}
-      />
+      {/* Avg GPU - Windows only */}
+      {showGpu && (
+        <StatCard
+          icon={Monitor}
+          label="Avg GPU"
+          value={session ? formatGpuPercent(session.avg_gpu_percent) : '--%'}
+          subValue={session ? `Peak: ${formatGpuPercent(session.peak_gpu_percent)}` : ''}
+          iconColor="text-accent-purple"
+          compact
+          animationKey={animationKey}
+        />
+      )}
     </div>
   );
 });

@@ -48,7 +48,10 @@ export function useAppUpdater(): UseAppUpdaterReturn {
         return false;
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to check for updates';
+      console.error('Update check error:', err);
+      const message = err instanceof Error
+        ? `${err.name}: ${err.message}`
+        : String(err) || 'Failed to check for updates';
       setError(message);
       setStatus('error');
       return false;

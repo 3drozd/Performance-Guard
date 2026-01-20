@@ -15,6 +15,7 @@
     "core:window:allow-create",
     "core:window:allow-close",
     "core:window:allow-set-focus",
-    "updater:default"
+    "updater:default",
+    "os:default"
   ]
 }

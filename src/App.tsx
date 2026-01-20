@@ -4,6 +4,7 @@ import { Header } from './components/layout';
 import { UpdateNotification } from './components/common';
 import { DashboardView, WhitelistView, DetailsView, SettingsView } from './views';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { PlatformProvider } from './contexts/PlatformContext';
 import { useFirestoreSync } from './hooks/useFirestoreSync';
 import { getProcesses, getSystemStats, saveAppData, loadAppData, signalAppReady, getAppIcon, getGlobalActivity } from './api/tauri';
 import type { ViewType, WhitelistEntry, ProcessInfo, SystemStats, AppSummary, Session, PerformanceSnapshot } from './types';
@@ -816,9 +817,11 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <PlatformProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </PlatformProvider>
   );
 }
 

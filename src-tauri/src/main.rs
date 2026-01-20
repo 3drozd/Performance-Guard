@@ -813,6 +813,7 @@ fn main() {
         .plugin(tauri_plugin_google_auth::init())
         .plugin(tauri_plugin_autostart::init(tauri_plugin_autostart::MacosLauncher::LaunchAgent, Some(vec!["--minimized"])))
         .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_os::init())
         .setup(|app| {
             // Initialize system
             let mut system = System::new_all();

@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
+import { usePlatform } from '../../contexts/PlatformContext';
 import type { PerformanceSnapshot } from '../../types';
 
 interface PerformanceChartProps {
@@ -328,6 +329,9 @@ export function PerformanceChart({
   isActive = true,
   animationKey,
 }: PerformanceChartProps) {
+  const platform = usePlatform();
+  const showGpu = platform === 'windows' || platform === 'unknown';
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -814,8 +818,8 @@ export function PerformanceChart({
       );
     }
 
-    // GPU chart
-    if (gpuCanvasRef.current) {
+    // GPU chart - Windows only
+    if (showGpu && gpuCanvasRef.current) {
       renderSingleMetricChart(
         gpuCanvasRef.current,
         filteredData,
@@ -841,7 +845,7 @@ export function PerformanceChart({
           hoveredIndex: expandedHover?.chart === 'ram' ? expandedHover.index : null }
       );
     }
-  }, [filteredData, timeRange, animationProgress, isExpanded, expandedDimensions, expandedHover]);
+  }, [filteredData, timeRange, animationProgress, isExpanded, expandedDimensions, expandedHover, showGpu]);
 
   const handleTimeRangeChange = useCallback((range: TimeRange) => {
     setTimeRange(range);
@@ -893,8 +897,8 @@ export function PerformanceChart({
 
       {/* Legend - all metrics in one row, Activity slides left on expand */}
       <div ref={legendRowRef} className="flex items-center gap-4 text-xs mb-2 relative">
-        {/* CPU, GPU, RAM - fade out on expand */}
-        {METRICS.filter(m => m.key !== 'user_activity_percent').map(metric => (
+        {/* CPU, GPU (Windows only), RAM - fade out on expand */}
+        {METRICS.filter(m => m.key !== 'user_activity_percent' && (showGpu || m.key !== 'gpu_percent')).map(metric => (
           <button
             key={metric.key}
             onClick={(e) => {
@@ -1102,47 +1106,49 @@ export function PerformanceChart({
                 </div>
               </div>
 
-              {/* GPU */}
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2 mb-1">
-                  <span
-                    className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: METRICS[1].color }}
-                  />
-                  <span className="text-xs text-text-muted">{METRICS[1].label}:</span>
-                  <span className="text-xs" style={{ color: METRICS[1].color }}>
-                    {stats['gpu_percent']?.current.toFixed(1)}%
-                  </span>
-                </div>
-                <div className="relative" style={{ height: miniChartHeight }}>
-                  <canvas
-                    ref={gpuCanvasRef}
-                    style={{ width: '100%', height: '100%' }}
-                    onMouseMove={(e) => handleMiniChartMouseMove(e, 'gpu', gpuCanvasRef.current)}
-                    onMouseLeave={handleMiniChartMouseLeave}
-                    onClick={(e) => { e.stopPropagation(); handleChartClick(e); }}
-                  />
-                  {expandedHover?.chart === 'gpu' && filteredData[expandedHover.index] && (
-                    <div
-                      className="absolute pointer-events-none z-10 bg-bg-elevated border border-border-subtle rounded-lg shadow-lg px-2 py-1 text-xs"
-                      style={{
-                        left: expandedHover.pos.x > 80 ? expandedHover.pos.x - 70 : expandedHover.pos.x + 8,
-                        top: Math.max(4, expandedHover.pos.y - 30),
-                      }}
-                    >
-                      <div className="text-text-muted text-[10px] mb-0.5">
-                        {new Date(filteredData[expandedHover.index].timestamp).toLocaleTimeString()}
+              {/* GPU - Windows only */}
+              {showGpu && (
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span
+                      className="w-2 h-2 rounded-full"
+                      style={{ backgroundColor: METRICS[1].color }}
+                    />
+                    <span className="text-xs text-text-muted">{METRICS[1].label}:</span>
+                    <span className="text-xs" style={{ color: METRICS[1].color }}>
+                      {stats['gpu_percent']?.current.toFixed(1)}%
+                    </span>
+                  </div>
+                  <div className="relative" style={{ height: miniChartHeight }}>
+                    <canvas
+                      ref={gpuCanvasRef}
+                      style={{ width: '100%', height: '100%' }}
+                      onMouseMove={(e) => handleMiniChartMouseMove(e, 'gpu', gpuCanvasRef.current)}
+                      onMouseLeave={handleMiniChartMouseLeave}
+                      onClick={(e) => { e.stopPropagation(); handleChartClick(e); }}
+                    />
+                    {expandedHover?.chart === 'gpu' && filteredData[expandedHover.index] && (
+                      <div
+                        className="absolute pointer-events-none z-10 bg-bg-elevated border border-border-subtle rounded-lg shadow-lg px-2 py-1 text-xs"
+                        style={{
+                          left: expandedHover.pos.x > 80 ? expandedHover.pos.x - 70 : expandedHover.pos.x + 8,
+                          top: Math.max(4, expandedHover.pos.y - 30),
+                        }}
+                      >
+                        <div className="text-text-muted text-[10px] mb-0.5">
+                          {new Date(filteredData[expandedHover.index].timestamp).toLocaleTimeString()}
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: METRICS[1].color }} />
+                          <span style={{ color: METRICS[1].color }}>
+                            {filteredData[expandedHover.index].gpu_percent.toFixed(1)}%
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: METRICS[1].color }} />
-                        <span style={{ color: METRICS[1].color }}>
-                          {filteredData[expandedHover.index].gpu_percent.toFixed(1)}%
-                        </span>
-                      </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* RAM */}
               <div className="flex flex-col">
