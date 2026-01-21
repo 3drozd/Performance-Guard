@@ -1,21 +1,22 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { platform } from '@tauri-apps/plugin-os';
 
-export type Platform = 'windows' | 'macos' | 'linux' | 'unknown';
+export type PlatformType = 'windows' | 'macos' | 'linux' | 'unknown';
 
-const PlatformContext = createContext<Platform>('unknown');
+const PlatformContext = createContext<PlatformType>('unknown');
 
 export function PlatformProvider({ children }: { children: ReactNode }) {
-  const [os, setOs] = useState<Platform>('unknown');
+  const [os, setOs] = useState<PlatformType>('unknown');
 
   useEffect(() => {
-    platform().then((p) => {
+    try {
+      const p = platform();
       if (p === 'windows' || p === 'macos' || p === 'linux') {
         setOs(p);
       }
-    }).catch(() => {
+    } catch {
       setOs('unknown');
-    });
+    }
   }, []);
 
   return (
@@ -25,6 +26,6 @@ export function PlatformProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function usePlatform(): Platform {
+export function usePlatform(): PlatformType {
   return useContext(PlatformContext);
 }
