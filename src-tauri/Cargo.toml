@@ -1,6 +1,6 @@
 [package]
 name = "performance-guard"
-version = "1.0.2"
+version = "1.0.3"
 description = "Performance Guard Desktop Application"
 authors = ["you"]
 edition = "2021"
