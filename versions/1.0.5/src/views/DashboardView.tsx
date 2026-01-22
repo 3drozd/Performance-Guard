@@ -45,7 +45,7 @@ export const DashboardView = memo(function DashboardView({
       <AnimatedItem className="flex-shrink-0">
         <SystemStats stats={systemStats} />
       </AnimatedItem>
-      <AnimatedItem className="flex-1 min-h-0">
+      <AnimatedItem className="flex-shrink-0 min-h-[400px]">
         <AppList apps={apps} onSelectApp={onSelectApp} />
       </AnimatedItem>
     </AnimatedContainer>
