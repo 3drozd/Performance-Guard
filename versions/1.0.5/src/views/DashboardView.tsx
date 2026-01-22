@@ -29,7 +29,7 @@ export const DashboardView = memo(function DashboardView({
       isActive={isActive}
       staggerDelay={100}
       initialDelay={100}
-      className="flex flex-col gap-6 p-6 h-full overflow-hidden min-w-[800px]"
+      className="flex flex-col gap-6 p-6 h-full overflow-y-scroll min-w-[800px]"
       initiallyHidden={initiallyHidden}
     >
       <AnimatedItem className="flex-shrink-0">
